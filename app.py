@@ -9,7 +9,8 @@ dados = pd.read_csv('brasileirao.csv')
 
 opcao = st.selectbox(
     "📊 Escolha qual estatística você quer analisar:",
-    ("1. Maiores Campeões", "2. Times com Mais Gols", "3. Times com Mais Vitórias", "4. Media de Gols por Temporada")
+    ("1. Maiores Campeões", "2. Times com Mais Gols", "3. Times com Mais Vitórias",
+      "4. Times com Mais Gols Sofridos", "5. Media de Gols por Temporada")
 )
 
 if opcao == "1. Maiores Campeões":
@@ -24,3 +25,11 @@ elif opcao == "2. Times com Mais Gols":
 elif opcao == "3. Times com Mais Vitórias":
     maisvit = dados.groupby('team')['won'].sum().sort_values(ascending= False)
     st.bar_chart(maisvit.head(10))
+
+elif opcao == "4. Times com Mais Gols Sofridos":
+    sofridos = dados.groupby('team')['goals_taken'].sum().sort_values(ascending = False)
+    st.bar_chart(sofridos.head(10))
+
+elif opcao == "5. Media de Gols por Temporada":
+    media = dados.groupby('season')['goals'].mean().sort_values(ascending = False)
+    st.bar_chart(media.head(10))
