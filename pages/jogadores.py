@@ -22,5 +22,12 @@ if opcao == "Top Artilheiros":
 if opcao == "Top Assistencias":
     st.subheader('Top Assistencias')
     assistencias = dados.groupby('Jogador')[['Assis.', 'Gols']].sum().sort_values(by='Assis.', ascending=False).head(10).reset_index()
-    fig = px.bar(assistencias, x='Jogador', y='Assis.', text_auto=True, color='Gols', color_continuous_scale='Reds')
+    fig = px.bar(assistencias, x='Jogador', y='Assis.', text_auto=True, color='Assis.', color_continuous_scale='Reds')
     st.plotly_chart(fig, use_container_width=True)
+
+if opcao == "Mais Participações em Gols":
+    st.subheader('Mais Participações em Gols')
+    dados["Participacoes"] = dados["Gols"].fillna(0) + dados["Assis."].fillna(0)
+    ga = dados.groupby('Jogador')['Participacoes'].sum().sort_values(ascending= False).head(10).reset_index()
+    fig = px.bar(ga, x = 'Jogador', y = 'Participacoes', text_auto = True, color = 'Participacoes', color_continuous_scale = 'Greens')
+    st.plotly_chart(fig, use_container_width = True)
