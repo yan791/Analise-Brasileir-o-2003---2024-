@@ -16,5 +16,11 @@ opcao = st.sidebar.selectbox(
 if opcao == "Top Artilheiros":
     st.subheader('Top Artilheiros 2024')
     artilheiros = dados.groupby('Jogador')['Gols'].sum().sort_values(ascending = False).head(10).reset_index()
-    fig = px.bar(artilheiros, x = 'Jogador', y = 'Gols', text_auto=True, color='Gols', color_continuous_scale='Purples')
+    fig = px.bar(artilheiros, x = 'Jogador', y = 'Gols', text_auto=True, color='Gols', color_continuous_scale='Blues')
     st.plotly_chart(fig, use_container_width = True)
+
+if opcao == "Top Assistencias":
+    st.subheader('Top Assistencias')
+    assistencias = dados.groupby('Jogador')[['Assis.', 'Gols']].sum().sort_values(by='Assis.', ascending=False).head(10).reset_index()
+    fig = px.bar(assistencias, x='Jogador', y='Assis.', text_auto=True, color='Gols', color_continuous_scale='Reds')
+    st.plotly_chart(fig, use_container_width=True)
